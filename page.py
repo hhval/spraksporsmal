@@ -45,7 +45,6 @@ def fetch_page_questions(page_url):
         # 2) Get question text from <div class="question-content">
         question_div = qd.select_one("div.question-content")
         question_raw = question_div.get_text(separator=" ", strip=True) if question_div else ""
-        #question_text = re.sub(r'\s+([,.:;?!\)])', r'\1', question_raw) 
 
         # 3) Get answer text from <div class="answer-content">
         answer_div = qd.select_one("div.answer-content")
@@ -59,8 +58,7 @@ def fetch_page_questions(page_url):
             if terms_expand is not None:
                 terms_expand.decompose()
             # Extract the text from the pruned <div>
-            answer_raw = answer_div.get_text(separator=" ", strip=True)      
-        #answer_text = re.sub(r'\s+([,.:;?!\)])', r'\1', answer_raw) 
+            answer_raw = answer_div.get_text(separator=" ", strip=True)
  
         # 4) Normalize each text field
         title_text = normalize_text(title_raw)
@@ -70,16 +68,16 @@ def fetch_page_questions(page_url):
         # 5) Check for 'nynorsk' (case-insensitive) in title, question, or answer
         combined_text = f"{title_text} {question_text} {answer_text}".lower()
         if "nynorsk" in combined_text:
-            lang_type = "nynorsk"
+            lang_type = "nno"
         else:
-            lang_type = "bokmål"
+            lang_type = "nob"
 
         results.append({
-            "link": link,
             "title": title_text,
             "question": question_text,
             "answer": answer_text,
             "lang_type": lang_type,
+            "link": link,
         })
         
     # Get link for next page

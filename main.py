@@ -25,11 +25,11 @@ def main():
         current_url = next_url
     
     print(f'Number of Q&A entries scraped: {len(all_results)}')
-    nynorsk_count = sum(1 for result in all_results if result["lang_type"] == "nynorsk")
+    nynorsk_count = sum(1 for result in all_results if result["lang_type"] == "nno")
     print(f'Number of entries containing the word "nynorsk": {nynorsk_count}')
 
     # Write to CSV and JSON
-    fieldnames = ["link", "title", "question", "answer", "lang_type"]
+    fieldnames = ["title", "question", "answer", "lang_type", "link"]
     with open(output_csv, "w", newline="", encoding="utf-8") as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
